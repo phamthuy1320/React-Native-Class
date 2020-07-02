@@ -29,32 +29,41 @@
 	
 	const inputValue=parseInt(document.getElementById("inputNumber").value);
 
-	count--;
-	if(count<=0){
+	
+	if(count===0){
 		document.getElementById("message").innerHTML="You lost, your guess is over";
 		return;
 	}
-	if(inputValue < correctNumber){
-	document.getElementById("message").innerHTML="Sorry your guess is too low, guess higher. You have "+count+((count>1)?' guesses left':' guess left');
-	document.getElementById("message").style.backgroundColor = "#ff0400";
-	
-	}
-	if(inputValue > correctNumber){
-		document.getElementById("message").innerHTML="Sorry your guess is too high, guess lower. You have "+count+((count>1)?' guesses left':' guess left');
-		document.getElementById("message").style.backgroundColor = "#ff0400";
-		
-	}
 	if(inputValue === correctNumber){
+		count=-1;
+		console.log('count: '+count);
 		document.getElementById("message").innerHTML="Congratulations!! You guessed correctly";
 		document.getElementById("message").style.backgroundColor = "#90ee90";
 		return;
 	}
+	if(count >0){
+		count--;
+		console.log('count: '+count);
+		if(inputValue < correctNumber){
+			document.getElementById("message").innerHTML="Sorry your guess is too low, guess higher. You have "+count+((count>1)?' guesses left':' guess left');
+			document.getElementById("message").style.backgroundColor = "#ff0400";
+		
+		}
+		if(inputValue > correctNumber){
+			document.getElementById("message").innerHTML="Sorry your guess is too high, guess lower. You have "+count+((count>1)?' guesses left':' guess left');
+			document.getElementById("message").style.backgroundColor = "#ff0400";
+			
+		}
+	}
+	else {
+		document.getElementById("message").innerHTML="You won, if want to continue, refresh page ";
+		return;
+	}
+
 	passGuessStr = passGuessStr+ inputValue +"<br>";
 	document.getElementById("passGuess").innerHTML=passGuessStr;
 
 }
-	
 
-	
 </script>
 </html>
