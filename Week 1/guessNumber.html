@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Number Guessing Game in HTML</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<div id="message">hello react native pls try to enter your number</div>
+<!--
+	<p id="count">hello react native pls try to enter your number</p>
+-->
+	<input type="number" name="" id="inputNumber">
+	<button id="guessButton" onclick="handleGuessBtnClick()">guess</button>
+<!--
+	<h2 id="result"></h2>
+-->
+	<h2 id="passGuess"></h2>
+</body>
+<script type="text/javascript">
+	const correctNumber = Math.floor(Math.random()*10)+1; // set up number random in range 1-10
+	console.log(correctNumber);
+
+	let passGuessStr="";
+	let count=10;// set guessing times limit 10
+
+	function handleGuessBtnClick(){
+	
+	const inputValue=parseInt(document.getElementById("inputNumber").value);
+
+	count--;
+	if(count<=0){
+		document.getElementById("message").innerHTML="You lost, your guess is over";
+		return;
+	}
+	if(inputValue < correctNumber){
+	document.getElementById("message").innerHTML="Sorry your guess is too low, guess higher. You have "+count+((count>1)?' guesses left':' guess left');
+	document.getElementById("message").style.backgroundColor = "#ff0400";
+	
+	}
+	if(inputValue > correctNumber){
+		document.getElementById("message").innerHTML="Sorry your guess is too high, guess lower. You have "+count+((count>1)?' guesses left':' guess left');
+		document.getElementById("message").style.backgroundColor = "#ff0400";
+		
+	}
+	if(inputValue === correctNumber){
+		document.getElementById("message").innerHTML="Congratulations!! You guessed correctly";
+		document.getElementById("message").style.backgroundColor = "#90ee90";
+		return;
+	}
+	passGuessStr = passGuessStr+ inputValue +"<br>";
+	document.getElementById("passGuess").innerHTML=passGuessStr;
+
+}
+	
+
+	
+</script>
+</html>
