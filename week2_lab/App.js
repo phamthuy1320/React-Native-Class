@@ -27,7 +27,7 @@ export default function App() {
             feed={item}
             />
           )}
-          keyExtractor={item => item.key}
+          keyExtractor={item => item.id.toString()}
         />
        
       </View>
