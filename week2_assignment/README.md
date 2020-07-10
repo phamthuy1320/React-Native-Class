@@ -1,0 +1,1 @@
+You can check in expo : https://snack.expo.io/@pham_thi_thuy/week2_assignment
