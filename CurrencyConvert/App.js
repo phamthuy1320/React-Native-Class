@@ -8,8 +8,8 @@ export default class App extends React.Component{
     super(props);
     this.state={
       inputValue:'',
-      currentCurrency:'đ 0.00 VND',
-      convertCurrency:'$ 0.00 USD',
+      currentCurrency:'đ 0.00🇻🇳VND',
+      convertCurrency:'$ 0.00🇺🇸USD',
       fromVND:true
     };
   }
@@ -17,19 +17,26 @@ export default class App extends React.Component{
   _convert = (value) =>
     {
       var tempValue;
-      if(value===''){tempValue=0}
+      var tempConvert;
+      if(value===''||value==0){tempValue='0.00'}
       else tempValue=value
      
       this.setState({
         inputValue:tempValue
       })
-      if(this.state.fromVND===true){this.setState({
-      currentCurrency: 'đ '+ tempValue + ' VND',
-      convertCurrency:'$ '+(tempValue/23000)+' USD',
+      if(this.state.fromVND===true){
+        tempConvert = tempValue/23000;
+        if(tempConvert===0) {tempConvert='0.00'}
+        this.setState({
+        currentCurrency: 'đ '+ tempValue + '🇻🇳VND',
+        convertCurrency:'$ '+tempConvert+'🇺🇸USD',
     })}
-      else{this.setState({
-        currentCurrency: '$ '+ tempValue + ' USD',
-        convertCurrency:'đ '+(tempValue*23000)+' VND',
+      else{
+        tempConvert = tempValue*23000;
+        if(tempConvert===0) {tempConvert='0.00'}
+        this.setState({
+        currentCurrency: '$ '+ tempValue + '🇺🇸USD',
+        convertCurrency:'đ '+(tempConvert)+'🇻🇳VND',
       })}
     }
 
@@ -63,33 +70,31 @@ export default class App extends React.Component{
       <TextInput style={styles.input} 
       onChangeText = {(value)=> this._convert(value)}/>
       
+      <Text style={styles.alert}>Please double press to convert!</Text>
+
      {<View style={styles.convertButton}>
         <TouchableOpacity style={[styles.convert,{backgroundColor:(this.state.fromVND===true)?'lightblue':'#ffffff'}]}
          onPress = {this._onPressConvertToUSD}>
-        <Text>VND to USD</Text>
+        <Text>🇻🇳VND to 🇺🇸USD</Text>
         
       </TouchableOpacity>
 
       <TouchableOpacity  style={[styles.convert,{backgroundColor:(this.state.fromVND===false)?'lightblue':'#ffffff'}]}
        onPress = {this._onPressConvertToVND}>
-        <Text>USD to VND</Text>
+        <Text>🇺🇸USD to 🇻🇳VND</Text>
       </TouchableOpacity>
       </View>}
-
-     {
+     
         <View style={styles.displayConvert}>
-          <View >
-            <Text style={styles.display}>CurrentCurrency</Text>
+          
+            <Text style={{textAlign:'center'}}>CurrentCurrency</Text>
             <Text style={styles.displayCurrency}>
             {this.state.currentCurrency}</Text>
-          </View>
-
-          <View >
-            <Text style={styles.dispay}>Convertion currency</Text>
+         
+            <Text style={{textAlign:'center'}}>Convertion currency</Text>
             <Text style={styles.displayCurrency}>{this.state.convertCurrency}</Text>
-          </View>
         </View>
-      }
+      
 
     </View>)
   }
@@ -106,12 +111,15 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 18,
+    marginBottom:20
   },
   input: {
     height:40,
+    width:'100%',
     borderWidth:1,
     textAlign:'center',
-    fontSize:24
+    fontSize:24,
+
   },
   convertButton:{
     marginVertical:5
@@ -126,13 +134,17 @@ const styles = StyleSheet.create({
     alignItems:'center'
     
   },
+  alert:{
+    fontSize:16,
+    color: 'red',
+    fontWeight:'bold',
+    marginTop:20
+  },
   displayConvert:{
-   
+  alignSelf:'center'
   },
   display:{
-   textAlign:'center',
-   justifyContent:'center',
-    alignItems:'center'
+    textAlign:'center',
   },
   displayCurrency:{
     fontSize:24,
