@@ -1,26 +1,28 @@
 import React,{useState} from 'react';
 import {View,Text,StyleSheet,TouchableOpacity,FlatList,Alert,TextInput,ScrollView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import {useRoute, useNavigation,CommonActions} from '@react-navigation/native';
 
 import {TODOS} from '../utils/data';
 import {TodoList} from '../Components/TodoList';
+import Complete from './CompleteScreen';
+import Active from './ActiveScreen';
 
 export function AllContent(){
     const [todoList, setTodoList] = useState(TODOS);
     const [todoBody, setTodoBody] = useState('');
     const navigation = useNavigation();
-    const onToggleTodo = id => {
-        const todo = todoList.find(todo => todo.id === id);
+    const onToggleTodo = i => {
+        const todo = todoList.find(todo => (todo === todoList[todoList.indexOf(i)]));
         todo.status = todo.status === 'Done' ? 'Active' : 'Done';//update status
-        const foundIndex = todoList.findIndex(todo => todo.id === id);
+        const foundIndex = todoList.findIndex(todo => todo === todoList[todoList.indexOf(i)]);
         todoList[foundIndex] = todo;//update item
         const newTodoList = [...todoList];
         setTodoList(newTodoList);
-        navigation.navigate('SingleTodoScreen',{todoId:todo.id,todoStatus:todo.status,todoBody:todo.body})
+        navigation.navigate('SingleTodoScreen',{todoId:(todoList.indexOf(todo)+1),todoStatus:todo.status,todoBody:todo.body})
       };
-    const onDeleteTodo = id => {
-      const newTodoList = todoList.filter(todo => todo.id !== id);
+    const onDeleteTodo = i => {
+      const newTodoList = todoList.filter(todo => (todo !== todoList[todoList.indexOf(i)]));
       setTodoList(newTodoList);
     };
     const onSubmitTodo = () => {
@@ -50,6 +52,7 @@ export function AllContent(){
             value={todoBody}
             style={styles.todoInput}
             onChangeText={text => setTodoBody(text)}
+            placeholder='Input task in here...'
         />
         <TouchableOpacity style={styles.button} onPress={onSubmitTodo}>
             <Text style={styles.buttonText}>Submit</Text>
@@ -104,6 +107,9 @@ export default function All(){
       <Stack.Screen 
         name='SingleTodoScreen' 
         component={SingleTodoScreen}
+        options={{
+          headerTitle:()=><Text style={{textAlign:'center',fontSize:25,fontWeight:'bold'}}>Single Todo Screen</Text>,
+        }}
       />
     </Stack.Navigator>
   )
@@ -133,7 +139,7 @@ const styles=StyleSheet.create({
       todoInput: {
         width: '95%',
         minHeight: 50,
-        color: 'white',
+        color: '#000',
         fontSize:20,
         fontWeight:'bold',
         padding:10,

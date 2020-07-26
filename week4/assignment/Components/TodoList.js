@@ -1,5 +1,6 @@
 import React from 'react';
 import {View,Text,StyleSheet,TouchableOpacity,FlatList,Alert} from 'react-native';
+import { TODOS } from '../utils/data';
 
 export const TodoItem = (props) =>{
     const statusStyle = {
@@ -16,7 +17,7 @@ export const TodoItem = (props) =>{
               onPress: () => console.log('Cancel Pressed'),
               style: 'cancel'
             },
-            { text: 'OK', onPress: () => props.onDeleteTodo(todo.id) }
+            { text: 'OK', onPress: () => props.onDeleteTodo(todo) }
           ],
           { cancelable: true }
         );
@@ -25,7 +26,7 @@ export const TodoItem = (props) =>{
         <TouchableOpacity
             key={props.todo.body}
             style={[styles.todoItem,statusStyle]}
-            onPress={()=>props.onToggleTodo(props.todo.id)}
+            onPress={()=>props.onToggleTodo(props.todo)}
             onLongPress={()=>onLongPress(props.todo)}
         >
             <Text style={styles.todoText}>
@@ -41,15 +42,15 @@ export const TodoList = (props)=>{
       data={props.todoList}
       renderItem={({item})=>
           <TodoItem 
-              key={item.id}
+              key={props.todoList.indexOf(item)+1}
               todo={item}
-              idx={item.id}
+              idx={props.todoList.indexOf(item)+1}
               onToggleTodo={props.onToggleTodo}
               onDeleteTodo={props.onDeleteTodo}
           />
       }
       ItemSeparatorComponent={()=><View style={styles.container}/>}
-      keyExtractor={item=>item.id}
+      keyExtractor={item=>props.todoList.indexOf(item)+1}
       />
   )
 }

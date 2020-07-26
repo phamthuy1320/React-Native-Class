@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -8,6 +8,7 @@ import Active from './ActiveScreen';
 
 const Tab = createBottomTabNavigator();
 export default function Home(){
+    const state =useState();
     return(
         <NavigationContainer>
             <Tab.Navigator

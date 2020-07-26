@@ -1,16 +1,16 @@
 import React,{useState} from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useRoute} from '@react-navigation/native'
 
 import {TODOS} from '../utils/data';
 import {TodoList} from '../Components/TodoList';
 
-function CompleteContent(){
-    const [todoList, setTodoList] = useState(TODOS.filter(function(item){return(item.status==='Done')}));
-    const onDeleteTodo = id => {
-      const newTodoList = todoList.filter(todo => todo.id !== id);
-      setTodoList(newTodoList);
-    };
+function CompleteContent(props){
+    const route=useRoute();
+    const DATA=(route.params?.data==null)?TODOS:route.params?.data;
+    const todoList=DATA.filter(function(item){return(item.status==='Done')});
+    
     return(
         <View style={{
             flex:1,
@@ -23,7 +23,7 @@ function CompleteContent(){
             <TodoList 
             todoList={todoList}
             onToggleTodo={()=>null}
-            onDeleteTodo={onDeleteTodo}
+            onDeleteTodo={()=>null}
             />
         </View>
         </View>
