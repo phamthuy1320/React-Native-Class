@@ -1,3 +1,3 @@
 React native location
 
-![demo](./demo.gif)
+![demo](./assets/location_image.png)
