@@ -20,7 +20,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.PhamThiThuy.rn_location"
+      "package": "com.PhamThiThuy.rn_location",
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyDQaGyRd_J01bVgQSQWIhYih0i0wDk_rB0" }   
+     }
     },
     "web": {
       "favicon": "./assets/favicon.png"
